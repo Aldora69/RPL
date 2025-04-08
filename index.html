@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>World Clock</title>
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>World Clock</h2>
+
+    <div class="custom-select-wrapper">
+      <input type="text" id="searchInput" placeholder="Search city or timezone..." autocomplete="off" />
+      <ul id="dropdownList" class="hidden"></ul>
+    </div>
+
+    <p class="show-date">--:--:--</p>
+    <button id="theme-toggle"> Switch Theme </button>
+  </div>
+
+  <script type="module" src="index.js"></script>
+</body>
+</html>
