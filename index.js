@@ -2,11 +2,31 @@ import { timeZonesList } from './locale.js';
 
 const searchInput = document.getElementById('searchInput');
 const dropdownList = document.getElementById('dropdownList');
-const showDate = document.querySelector('.show-date');
-const themeToggleButton = document.getElementById('theme-toggle');
+const mainTime = document.getElementById('main-time');
+const currentTimezone = document.getElementById('current-timezone');
+const timezoneDisplay = document.querySelector('.timezone-display');
+const timezoneDropdown = document.querySelector('.timezone-dropdown');
+const themeToggle = document.getElementById('theme-toggle');
+const timezone1 = document.getElementById('timezone-1');
+const timezone2 = document.getElementById('timezone-2');
 
-let currentZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+let currentZone = 'Asia/Bangkok';
+const secondaryZones = {
+  'timezone-1': 'America/Puerto_Rico',
+  'timezone-2': 'America/Chicago'
+};
 
+// Initialize timezone names
+timezone1.querySelector('.timezone-name').textContent = getSimpleName(secondaryZones['timezone-1']);
+timezone2.querySelector('.timezone-name').textContent = getSimpleName(secondaryZones['timezone-2']);
+
+// Helper function to get simple name from timezone
+function getSimpleName(timezone) {
+  const parts = timezone.split('/');
+  return parts[parts.length - 1].replace('_', ' ');
+}
+
+// Populate dropdown with timezones
 function populateDropdown(filter = '') {
   dropdownList.innerHTML = '';
   const filtered = timeZonesList.filter(zone =>
@@ -14,7 +34,10 @@ function populateDropdown(filter = '') {
   );
 
   if (filtered.length === 0) {
-    dropdownList.innerHTML = `<li disabled>No match found</li>`;
+    const li = document.createElement('li');
+    li.textContent = 'No match found';
+    li.setAttribute('disabled', true);
+    dropdownList.appendChild(li);
     return;
   }
 
@@ -22,46 +45,101 @@ function populateDropdown(filter = '') {
     const li = document.createElement('li');
     li.textContent = zone;
     li.addEventListener('click', () => {
-      searchInput.value = zone;
       currentZone = zone;
-      dropdownList.classList.add('hidden');
+      currentTimezone.textContent = zone;
+      timezoneDropdown.style.display = 'none';
+      updateAllTimes();
     });
     dropdownList.appendChild(li);
   });
 }
 
-function updateTime() {
-  const now = new Date();
-  const options = {
-    timeZone: currentZone,
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: false,
-  };
-  showDate.textContent = new Intl.DateTimeFormat('en-US', options).format(now);
+// Format time for main display (with AM/PM)
+function formatMainTime(date) {
+  let hours = date.getHours();
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const seconds = date.getSeconds().toString().padStart(2, '0');
+  
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // 0 => 12
+  const formattedHours = hours.toString().padStart(2, '0');
+  
+  return `${formattedHours}:${minutes}:${seconds} ${ampm}`;
 }
 
+// Format time for secondary timezones (hour:minute only)
+function formatSecondaryTime(date) {
+  const hours = date.getHours().toString().padStart(2, '0');
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  return `${hours}:${minutes}`;
+}
+
+// Calculate time difference in hours
+function calculateTimeDifference(timezone1, timezone2) {
+  const now = new Date();
+  
+  // Get date objects in both timezones
+  const date1 = new Date(now.toLocaleString('en-US', { timeZone: timezone1 }));
+  const date2 = new Date(now.toLocaleString('en-US', { timeZone: timezone2 }));
+  
+  // Calculate difference in hours
+  const diffMs = date1 - date2;
+  const diffHours = diffMs / (1000 * 60 * 60);
+  
+  return diffHours.toFixed(1);
+}
+
+// Update all times
+function updateAllTimes() {
+  const now = new Date();
+  
+  // Update main time
+  const mainTimeDate = new Date(now.toLocaleString('en-US', { timeZone: currentZone }));
+  mainTime.textContent = formatMainTime(mainTimeDate);
+  
+  // Update secondary timezones
+  for (const [id, timezone] of Object.entries(secondaryZones)) {
+    const element = document.getElementById(id);
+    const timeElement = element.querySelector('.timezone-time');
+    const dateElement = element.querySelector('.timezone-date');
+    
+    const timezoneDate = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
+    timeElement.textContent = formatSecondaryTime(timezoneDate);
+    
+    // Calculate time difference
+    const diff = calculateTimeDifference(currentZone, timezone);
+    const prefix = diff > 0 ? '-' : '+';
+    dateElement.textContent = `Today, ${prefix}${Math.abs(diff)}H`;
+  }
+}
+
+// Event listeners
 searchInput.addEventListener('input', e => {
   populateDropdown(e.target.value);
-  dropdownList.classList.remove('hidden');
 });
 
-searchInput.addEventListener('focus', () => {
-  populateDropdown(searchInput.value);
-  dropdownList.classList.remove('hidden');
-});
-
-document.addEventListener('click', e => {
-  if (!e.target.closest('.custom-select-wrapper')) {
-    dropdownList.classList.add('hidden');
+timezoneDisplay.addEventListener('click', () => {
+  if (timezoneDropdown.style.display === 'none' || !timezoneDropdown.style.display) {
+    timezoneDropdown.style.display = 'block';
+    searchInput.focus();
+    populateDropdown();
+  } else {
+    timezoneDropdown.style.display = 'none';
   }
 });
 
-themeToggleButton.addEventListener('click', () => {
+document.addEventListener('click', e => {
+  if (!timezoneDisplay.contains(e.target) && !timezoneDropdown.contains(e.target)) {
+    timezoneDropdown.style.display = 'none';
+  }
+});
+
+themeToggle.addEventListener('click', () => {
   document.body.classList.toggle('dark');
 });
 
+// Initialize
 populateDropdown();
-setInterval(updateTime, 1000);
-updateTime();
+updateAllTimes();
+setInterval(updateAllTimes, 1000);
