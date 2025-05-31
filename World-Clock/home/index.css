@@ -1,0 +1,357 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Hind+Siliguri&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #E5ECF6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark {
+  background-color: #0F0B21;
+  color: #fff;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+body.dark .container {
+  background-color: #0F0B21;
+}
+
+.header {
+  position: absolute;
+  top: 45px;
+  left: 45px;
+  padding: 10px 0;
+}
+
+.header h4 {
+  color: #555;
+  font-weight: 500;
+}
+
+body.dark .header h4 {
+  color: #aaa;
+}
+
+h1 {
+  color: #4d4d4d;
+  text-align: center;
+  margin: 20px 0;
+  font-size: 2.5rem;
+}
+
+body.dark h1 {
+  color: white;
+}
+
+.timezone-selector {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.timezone-display {
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+}
+
+body.dark .timezone-display {
+  background-color: #2a2a35;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.timezone-display span {
+  font-size: 1rem;
+  color: #333;
+}
+
+body.dark .timezone-display span {
+  color: #eee;
+}
+
+.arrow {
+  font-size: 1.2rem;
+  color: #999;
+}
+
+body.dark .arrow {
+  color: #ccc;
+}
+
+.timezone-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  margin-top: 5px;
+  overflow: hidden;
+  max-height: 300px;
+}
+
+body.dark .timezone-dropdown {
+  background-color: #2a2a35;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.search-container {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+body.dark .search-container {
+  border-bottom: 1px solid #444;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+body.dark #searchInput {
+  background-color: #3a3a45;
+  border-color: #555;
+  color: white;
+}
+
+#dropdownList {
+  list-style: none;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+#dropdownList li {
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#dropdownList li:hover {
+  background-color: #f5f7fa;
+}
+
+body.dark #dropdownList li:hover {
+  background-color: #3a3a45;
+}
+
+.main-clock {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.time {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #002957;
+}
+
+body.dark .time {
+  color: #4d88ff;
+}
+
+.other-timezones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  width: 50%;
+}
+
+.timezone-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 18px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #999;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.timezone-card:hover .close-btn {
+  opacity: 1;
+}
+
+.close-btn:hover {
+  background-color: #f0f0f0;
+  color: #666;
+  transform: scale(1.1);
+}
+
+body.dark .close-btn {
+  color: #aaa;
+}
+
+body.dark .close-btn:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+body.dark .timezone-card {
+  background-color: #2a2a35;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.timezone-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
+}
+
+.timezone-name {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #333;
+  letter-spacing: 0.3px;
+}
+
+body.dark .timezone-name {
+  color: #eee;
+}
+
+.timezone-date {
+  font-size: 0.8rem;
+  color: #666;
+  letter-spacing: 0.2px;
+}
+
+body.dark .timezone-date {
+  color: #bbb;
+}
+
+.timezone-time {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #444;
+  margin-left: 25px;
+  letter-spacing: 0.5px;
+}
+
+body.dark .timezone-time {
+  color: #eee;
+}
+
+@media (max-width: 480px) {
+  .timezone-selector,
+  .other-timezones {
+    width: 80%;
+  }
+  
+  .timezone-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 20px;
+  }
+
+  .timezone-time {
+    margin-left: 0;
+    margin-top: 10px;
+    font-size: 1.4rem;
+    align-self: flex-end;
+  }
+}
+
+.bottom-icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.icon-button {
+  background-color: white;
+  border-radius: 10px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+body.dark .icon-button {
+  background-color: #2a2a35;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.icon-button:hover {
+  background-color: #f5f7fa;
+}
+
+body.dark .icon-button:hover {
+  background-color: #3a3a45;
+}
+
+.icon {
+  font-size: 1.5rem;
+  color: #666;
+}
+
+body.dark .icon {
+  color: #aaa;
+}
+
+.hidden {
+  display: none;
+}

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stopwatch</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #edf0f7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    h2 {
+      color: #4d4d4d;
+      margin-bottom: 20px;
+    }
+    .timer-wrapper {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      margin-bottom: 20px;
+    }
+    .timer {
+      font-size: 1.5rem;
+      font-weight: bold;
+      background: white;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 1;
+    }
+    .tick-marks {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      top: 10px;
+      left: 10px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .tick-marks div {
+      position: absolute;
+      width: 2px;
+      height: 8px;
+      background: #aaa;
+      top: 15px;
+      left: 149px;
+      transform-origin: center 135px;
+    }
+
+    .second-indicator {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: red;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: rotate(0deg) translateY(-135px);
+      transform-origin: center center;
+      z-index: 3;
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+      cursor: pointer;
+    }
+    .start {
+      background-color: #e6ebf5;
+      color: #333;
+    }
+    .pause {
+      background-color: #f0f0f0;
+      color: #333;
+    }
+    .reset {
+      background-color: #f7f7f7;
+      color: red;
+    }
+    .laps {
+      width: 300px;
+    }
+    .lap-item {
+      background: #f0f3f9;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.05);
+    }
+    .bottom-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 30px;
+    }
+    .bottom-icons button {
+      background: #f7f8fa;
+      padding: 1rem;
+      border-radius: 15px;
+    }
+    .bottom-icons img {
+      width: 24px;
+      height: 24px;
+    }
+    .icon-button {
+    background-color: white;
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  body.dark .icon-button {
+    background-color: #395180;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .icon-button:hover {
+    background-color: #f5f7fa;
+  }
+  
+  body.dark .icon-button:hover {
+    background-color: #9DB1CE;
+  }
+  
+  .icon {
+    font-size: 1.5rem;
+    color: #666;
+  }
+  
+  body.dark .icon {
+    color: #E5ECF6;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  </style>
+</head>
+<body>
+  <h2>Stopwatch</h2>
+  <div class="timer-wrapper">
+    <div class="tick-marks" id="tickMarks"></div>
+    <div class="second-indicator" id="secondIndicator"></div>
+    <div class="timer" id="display">00:00:00:00</div>
+  </div>
+  <div class="controls">
+    <button class="start" onclick="startStop()" id="startStopBtn">Start</button>
+    <button class="pause" onclick="pauseTimer()" id="pauseBtn">Pause</button>
+    <button class="reset" onclick="resetTimer()">Reset</button>
+  </div>
+  <div class="laps" id="laps"></div>
+  <div class="bottom-icons">
+        <a href="/alarm/alarm.html" class="icon-button" style="text-decoration: none;">
+          <div class="icon">⏰</div>
+        </a> 
+        <a href="/stopwatch/stopwatch.html" class="icon-button" style="text-decoration: none;">
+          <div class="icon">⏱️</div>
+        </a>
+        <div class="icon-button" id="theme-toggle">
+          <div class="icon">🌓</div>
+        </div>
+        <div class="icon-button">
+        <a href="/index.html" class="icon-button" style="text-decoration: none;">
+          <div class="icon">🌐</div>
+        </a>
+        </div>
+      </div>
+    </div>
+
+  <script>
+  let startTime = null;
+  let elapsedTime = 0;
+  let timer = null;
+  let lapCount = 0;
+  const display = document.getElementById("display");
+  const secondIndicator = document.getElementById("secondIndicator");
+
+  function updateDisplay() {
+    const time = elapsedTime + (timer ? performance.now() - startTime : 0);
+    const totalMs = Math.floor(time);
+    const ms = Math.floor((totalMs % 1000) / 10);
+    const s = Math.floor(totalMs / 1000) % 60;
+    const m = Math.floor(totalMs / 60000) % 60;
+    const h = Math.floor(totalMs / 3600000);
+
+    display.innerHTML = 
+      `${String(h).padStart(2, '0')}:` +
+      `${String(m).padStart(2, '0')}:` +
+      `${String(s).padStart(2, '0')}:` +
+      `${String(ms).padStart(2, '0')}`;
+
+    // Rotate second indicator
+    const angle = (s + ms / 100) * 6; // 360deg / 60s
+    secondIndicator.style.transform = `rotate(${angle}deg) translateY(-135px)`;
+
+    if (timer) requestAnimationFrame(updateDisplay);
+  }
+
+  function startStop() {
+    if (!timer) {
+      startTime = performance.now();
+      timer = true;
+      requestAnimationFrame(updateDisplay);
+      document.getElementById("startStopBtn").innerText = "Lap";
+    } else {
+      lapCount++;
+      const lapTime = display.innerText;
+      const lapEl = document.createElement("div");
+      lapEl.className = "lap-item";
+      lapEl.innerHTML = `${lapCount} Lap <span>${lapTime}</span>`;
+      document.getElementById("laps").prepend(lapEl);
+    }
+  }
+
+  function pauseTimer() {
+    if (timer) {
+      elapsedTime += performance.now() - startTime;
+      timer = null;
+      document.getElementById("startStopBtn").innerText = "Start";
+    }
+  }
+
+  function resetTimer() {
+    timer = null;
+    startTime = null;
+    elapsedTime = 0;
+    lapCount = 0;
+    display.innerHTML = "00:00:00:00";
+    document.getElementById("laps").innerHTML = "";
+    document.getElementById("startStopBtn").innerText = "Start";
+    secondIndicator.style.transform = `rotate(0deg) translateY(-90px)`;
+  }
+
+  // Generate tick marks inside the circle
+  const tickContainer = document.getElementById("tickMarks");
+  for (let i = 0; i < 60; i++) {
+    const tick = document.createElement("div");
+    tick.style.transform = `rotate(${i * 6}deg)`;
+    tickContainer.appendChild(tick);
+  }
+</script>
+</body>
+</html>
