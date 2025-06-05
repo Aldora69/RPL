@@ -45,11 +45,11 @@ body.dark .container {
 
 .header h4 {
   color: #555;
-  font-weight: 500;
+  font-weight: bold;
 }
 
 body.dark .header h4 {
-  color: #aaa;
+  color: #B2A8EE;
 }
 
 h1 {
@@ -73,7 +73,7 @@ body.dark h1 {
 }
 
 .timezone-display {
-  background-color: white;
+  background-color: E5ECF6;
   border-radius: 10px;
   padding: 15px 20px;
   width: 100%;
@@ -82,21 +82,23 @@ body.dark h1 {
   align-items: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 body.dark .timezone-display {
-  background-color: #2a2a35;
-  color: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  background-color: #B2A8EE;
+  color: 002253;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .timezone-display span {
   font-size: 1rem;
   color: #333;
+  font-weight: bold;
 }
 
 body.dark .timezone-display span {
-  color: #eee;
+  color: #002253;
 }
 
 .arrow {
@@ -120,6 +122,7 @@ body.dark .arrow {
   margin-top: 5px;
   overflow: hidden;
   max-height: 300px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 body.dark .timezone-dropdown {
@@ -182,7 +185,7 @@ body.dark #dropdownList li:hover {
 }
 
 body.dark .time {
-  color: #4d88ff;
+  color: #E5ECF6;
 }
 
 .other-timezones {
@@ -195,7 +198,7 @@ body.dark .time {
 }
 
 .timezone-card {
-  background-color: white;
+  background-color: E5ECF6;
   border-radius: 10px;
   padding: 18px 25px;
   display: flex;
@@ -205,6 +208,7 @@ body.dark .time {
   width: 100%;
   margin: 0 auto;
   position: relative;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .close-btn {
@@ -246,8 +250,8 @@ body.dark .close-btn:hover {
 }
 
 body.dark .timezone-card {
-  background-color: #2a2a35;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  background-color: #B2A8EE;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .timezone-info {
@@ -258,36 +262,37 @@ body.dark .timezone-card {
 }
 
 .timezone-name {
-  font-weight: 600;
   font-size: 1rem;
   color: #333;
   letter-spacing: 0.3px;
+  font-weight: bold;
 }
 
 body.dark .timezone-name {
-  color: #eee;
+  color: #002253;
 }
 
 .timezone-date {
   font-size: 0.8rem;
   color: #666;
   letter-spacing: 0.2px;
+  font-weight: bold;
 }
 
 body.dark .timezone-date {
-  color: #bbb;
+  color: #002253;
 }
 
 .timezone-time {
   font-size: 1.4rem;
-  font-weight: 600;
   color: #444;
   margin-left: 25px;
   letter-spacing: 0.5px;
+  font-weight: bold;
 }
 
 body.dark .timezone-time {
-  color: #eee;
+  color: #002253;
 }
 
 @media (max-width: 480px) {
@@ -307,6 +312,7 @@ body.dark .timezone-time {
     margin-top: 10px;
     font-size: 1.4rem;
     align-self: flex-end;
+    font-weight: bold;
   }
 }
 
@@ -318,7 +324,7 @@ body.dark .timezone-time {
 }
 
 .icon-button {
-  background-color: white;
+  background-color: E5ECF6;
   border-radius: 10px;
   width: 50px;
   height: 50px;
@@ -328,11 +334,12 @@ body.dark .timezone-time {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   cursor: pointer;
   transition: background-color 0.2s;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 body.dark .icon-button {
-  background-color: #2a2a35;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  background-color: #B2A8EE;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .icon-button:hover {
@@ -354,4 +361,12 @@ body.dark .icon {
 
 .hidden {
   display: none;
+}
+
+body {
+  animation: fadeIn 0.6s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
