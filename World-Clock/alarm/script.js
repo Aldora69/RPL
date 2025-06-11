@@ -199,9 +199,6 @@ minuteInput.addEventListener('input', function() {
     }
 });
 
-themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-  });
 
 function updateCountdowns() {
     renderAlarms();

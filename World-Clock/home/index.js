@@ -1,4 +1,4 @@
-import { timeZonesList } from '/locale.js';
+import { timeZonesList } from '../locale.js';
 
 const searchInput = document.getElementById('searchInput');
 const dropdownList = document.getElementById('dropdownList');
@@ -6,7 +6,6 @@ const mainTime = document.getElementById('main-time');
 const currentTimezone = document.getElementById('current-timezone');
 const timezoneDisplay = document.querySelector('.timezone-display');
 const timezoneDropdown = document.querySelector('.timezone-dropdown');
-const themeToggle = document.getElementById('theme-toggle');
 const timezone1 = document.getElementById('timezone-1');
 const timezone2 = document.getElementById('timezone-2');
 
@@ -192,10 +191,6 @@ document.addEventListener('click', e => {
   if (!timezoneDisplay.contains(e.target) && !timezoneDropdown.contains(e.target)) {
     timezoneDropdown.style.display = 'none';
   }
-});
-
-themeToggle.addEventListener('click', () => {
-  document.body.classList.toggle('dark');
 });
 
 // Initialize
