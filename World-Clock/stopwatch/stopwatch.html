@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stopwatch</title>
+  <link rel="stylesheet" href="../index.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Stopwatch</h2>
+    <div class="timer-wrapper">
+      <div class="tick-marks" id="tickMarks"></div>
+      <div class="second-indicator" id="secondIndicator"></div>
+      <div class="timer" id="display">00:00:00:00</div>
+    </div>
+    <div class="controls">
+      <button class="start" onclick="startStop()" id="startStopBtn">Start</button>
+      <button class="pause" onclick="pauseTimer()" id="pauseBtn">Pause</button>
+      <button class="reset" onclick="resetTimer()">Reset</button>
+    </div>
+    <div class="laps" id="laps"></div>
+    <div class="bottom-icons">
+      <a href="../alarm/alarm.html" class="icon-button" style="text-decoration: none;">
+        <div class="icon">⏰</div>
+      </a>
+      <a href="stopwatch.html" class="icon-button" style="text-decoration: none;">
+        <div class="icon">⏱️</div>
+      </a>
+      <div class="icon-button" id="theme-toggle">
+        <div class="icon">🌓</div>
+      </div>
+      <div class="icon-button">
+        <a href="../index.html" class="icon-button" style="text-decoration: none;">
+          <div class="icon">🌐</div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <script src="../theme.js"></script>
+  <script src="stopwatch.js"></script>
+</body>
+</html>
