@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alarm</title>
+    <link rel="stylesheet" href="/alarm/alarm.css">
+    <link rel="preload" href="/alarm/alarm-sound.mp3" as="audio">
+</head>
+<body>
+    <div class="headers">
+        <h4>Alarm</h4>
+    </div>
+
+    <div class="header">
+        <div class="action-buttons">
+            <button class="action-button" id="editButton">✏️</button>
+            <button class="action-button" id="addButton">+</button>
+        </div>
+    </div>
+    
+    <div id="alarmContainer">
+    </div>
+
+    <div class="bottom-icons">
+        <a href="/alarm/alarm.html" class="icon-button" style="text-decoration: none;">
+          <div class="icon">⏰</div>
+        </a> 
+        <a href="/stopwatch/stopwatch.html" class="icon-button" style="text-decoration: none;">
+          <div class="icon">⏱️</div>
+        </a>
+        <div class="icon-button" id="theme-toggle">
+          <div class="icon">🌓</div>
+        </div>
+        <div class="icon-button">
+        <a href="/index.html" class="icon-button" style="text-decoration: none;">
+          <div class="icon">🌐</div>
+        </a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal" id="alarmModal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Tambah Alarm</h2>
+            
+            <div class="time-picker">
+                <input type="number" id="hourInput" class="time-input" min="1" max="12" value="8">
+                <span class="time-separator">:</span>
+                <input type="number" id="minuteInput" class="time-input" min="0" max="59" value="30">
+            </div>
+            
+            <div class="am-pm-toggle">
+                <div class="am-pm-btn selected" id="amBtn">AM</div>
+                <div class="am-pm-btn" id="pmBtn">PM</div>
+            </div>
+            
+            <div>
+                <p>Ulangi:</p>
+                <div class="day-selector" id="daySelectorModal">
+                    <div class="day" data-day="0">M</div>
+                    <div class="day" data-day="1">S</div>
+                    <div class="day" data-day="2">S</div>
+                    <div class="day selected" data-day="3">R</div>
+                    <div class="day selected" data-day="4">K</div>
+                    <div class="day selected" data-day="5">J</div>
+                    <div class="day" data-day="6">S</div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="modal-btn btn-cancel" id="cancelBtn">Batal</button>
+                <button class="modal-btn btn-save" id="saveBtn">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="database.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Hind+Siliguri&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif; 
+    }
+
+    body {
+      background-color: #E5ECF6; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      transition: background-color 0.3s, color 0.3s; 
+      color: #333; 
+    }
+
+    body.dark {
+      background-color: #0F0B21; 
+      color: #fff; 
+    }
+    
+    .header {
+    position: absolute;
+    top: 45px;
+    left: 45px;
+    padding: 10px 0;
+    font-weight: bold; 
+    }
+
+    .header h4 {
+      color: #4d4d4d;
+      margin-bottom: 20px;
+    }
+
+    body.dark h4 {
+      color: #B2A8EE; 
+    }
+
+    .timer-wrapper {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      margin-bottom: 20px;
+    }
+    .timer {
+      font-size: 2.5rem; 
+      font-weight: bold; 
+      background-color: #E5ECF6;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 1;
+      color: #002957;
+    }
+
+    body.dark .timer {
+      background-color: #B2A8EE; 
+      color: #002253;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); 
+    }
+
+    .tick-marks {
+      position: absolute;
+      width: 320px; 
+      height: 320px;
+      top: 0; 
+      left: 0; 
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .tick-marks div {
+      position: absolute;
+      width: 2px;
+      height: 8px;
+      background: #aaa; 
+      top: 15px;
+      left: calc(50% - 1px); 
+      transform-origin: center 145px; 
+    }
+
+    body.dark .tick-marks div {
+      background: #eee; 
+    }
+
+    .controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px; 
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px; 
+      cursor: pointer;
+      background-color: #E5ECF6; 
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+      color: #333; 
+      transition: background-color 0.2s, color 0.2s; 
+    }
+
+    body.dark button {
+      background-color: #B2A8EE; 
+      color: #002253; 
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); 
+    }
+
+    button:hover {
+      background-color: #f5f7fa;
+    }
+
+    body.dark button:hover {
+      background-color: #3a3a45;
+      color: white;
+    }
+
+    .reset {
+      color: #C72E2E; 
+    }
+
+    body.dark .reset {
+      color: #fff; 
+    }
+
+    .laps-container::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .laps {
+    width: 300px;
+    margin: 0 auto;
+    
+    }
+    .lap-item {
+      background-color: #E5ECF6;
+      color: var(--color-text-light);
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    body.dark .lap-item {
+      background-color: #B2A8EE;
+      color: #002253; 
+      font-weight: bold;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); 
+    }
+
+    .lap-item span {
+      font-weight: bold;
+      font-size: 0.95rem;
+      color: #002253;
+    }
+
+    body.dark .lap-item span {
+      color: #002253; 
+    }
+
+    .bottom-icons {
+      display: flex;
+      gap: 15px; 
+      margin-top: 30px;
+    }
+    .icon-button {
+      background-color: #E5ECF6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+      cursor: pointer;
+      transition: background-color 0.2s;
+      width: 50px; 
+      height: 50px; 
+      border-radius: 10px; 
+      text-decoration: none; 
+    }
+
+    body.dark .icon-button {
+      background-color: #B2A8EE; 
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4); 
+    }
+
+    .icon-button:hover {
+      background-color: #f5f7fa; 
+    }
+
+    body.dark .icon-button:hover {
+      background-color: #3a3a45; 
+    }
+
+    .icon {
+      font-size: 1.5rem;
+      color: #666;
+    }
+
+    body.dark .icon {
+      color: #aaa; 
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    body {
+      animation: fadeIn 0.6s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 480px) {
+      .timer-wrapper {
+        width: 280px;
+        height: 280px;
+      }
+      .timer {
+        width: 260px;
+        height: 260px;
+        top: 10px;
+        left: 10px;
+        font-size: 2rem;
+      }
+      .tick-marks {
+        width: 280px;
+        height: 280px;
+      }
+      .tick-marks div {
+        transform-origin: center 125px;
+      }
+      .second-indicator {
+        transform: translate(-50%, -50%) rotate(0deg) translateY(-115px);
+      }
+      .laps {
+        width: 280px;
+      }
+      .controls {
+        flex-direction: column;
+      }
+    }

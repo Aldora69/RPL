@@ -22,14 +22,14 @@ body.dark {
 }
 
 .container {
-  width: 100%;
-  max-width: 500px;
-  padding: 20px;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  background-color: #E5ECF6;
-  transition: background-color 0.3s;
+  justify-content: center;
+  align-items: center;
 }
 
 body.dark .container {
@@ -37,17 +37,19 @@ body.dark .container {
 }
 
 .header {
-  text-align: left;
+  position: absolute;
+  top: 45px; 
+  left: 45px;
   padding: 10px 0;
 }
 
 .header h4 {
   color: #555;
-  font-weight: 500;
+  font-weight: bold;
 }
 
 body.dark .header h4 {
-  color: #aaa;
+  color: #B2A8EE;
 }
 
 h1 {
@@ -62,7 +64,7 @@ body.dark h1 {
 }
 
 .timezone-selector {
-  width: 100%;
+  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -71,30 +73,32 @@ body.dark h1 {
 }
 
 .timezone-display {
-  background-color: white;
+  background-color: E5ECF6;
   border-radius: 10px;
   padding: 15px 20px;
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 body.dark .timezone-display {
-  background-color: #2a2a35;
-  color: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  background-color: #B2A8EE;
+  color: 002253;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .timezone-display span {
   font-size: 1rem;
   color: #333;
+  font-weight: bold;
 }
 
 body.dark .timezone-display span {
-  color: #eee;
+  color: #002253;
 }
 
 .arrow {
@@ -118,6 +122,7 @@ body.dark .arrow {
   margin-top: 5px;
   overflow: hidden;
   max-height: 300px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 body.dark .timezone-dropdown {
@@ -180,87 +185,161 @@ body.dark #dropdownList li:hover {
 }
 
 body.dark .time {
-  color: #4d88ff;
+  color: #E5ECF6;
 }
 
 .other-timezones {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  width: 50%;
 }
 
 .timezone-card {
-  background-color: white;
+  background-color: E5ECF6;
   border-radius: 10px;
-  padding: 15px 20px;
+  padding: 18px 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #999;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  opacity: 0;
+}
+
+.timezone-card:hover .close-btn {
+  opacity: 1;
+}
+
+.close-btn:hover {
+  background-color: #f0f0f0;
+  color: #666;
+  transform: scale(1.1);
+}
+
+body.dark .close-btn {
+  color: #aaa;
+}
+
+body.dark .close-btn:hover {
+  background-color: #444;
+  color: #fff;
 }
 
 body.dark .timezone-card {
-  background-color: #2a2a35;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  background-color: #B2A8EE;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .timezone-info {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 4px;
+  flex-grow: 1;
 }
 
 .timezone-name {
-  font-weight: 500;
+  font-size: 1rem;
   color: #333;
+  letter-spacing: 0.3px;
+  font-weight: bold;
 }
 
 body.dark .timezone-name {
-  color: #eee;
+  color: #002253;
 }
 
 .timezone-date {
   font-size: 0.8rem;
-  color: #777;
+  color: #666;
+  letter-spacing: 0.2px;
+  font-weight: bold;
 }
 
 body.dark .timezone-date {
-  color: #aaa;
+  color: #002253;
 }
 
 .timezone-time {
-  font-size: 1.5rem;
-  font-weight: 500;
+  font-size: 1.4rem;
   color: #444;
+  margin-left: 25px;
+  letter-spacing: 0.5px;
+  font-weight: bold;
 }
 
 body.dark .timezone-time {
-  color: #ddd;
+  color: #002253;
+}
+
+@media (max-width: 480px) {
+  .timezone-selector,
+  .other-timezones {
+    width: 80%;
+  }
+  
+  .timezone-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 20px;
+  }
+
+  .timezone-time {
+    margin-left: 0;
+    margin-top: 10px;
+    font-size: 1.4rem;
+    align-self: flex-end;
+    font-weight: bold;
+  }
 }
 
 .bottom-icons {
   display: flex;
   justify-content: center;
   gap: 15px;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .icon-button {
-  background-color: white;
+  background-color: #E5ECF6;
   border-radius: 10px;
   width: 50px;
   height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   cursor: pointer;
   transition: background-color 0.2s;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 body.dark .icon-button {
-  background-color: #2a2a35;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  background-color: #B2A8EE;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 
 .icon-button:hover {
@@ -284,3 +363,10 @@ body.dark .icon {
   display: none;
 }
 
+body {
+  animation: fadeIn 0.6s ease-in-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}

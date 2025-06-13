@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/stopwatch/stopwatch.css">
+  <title>Stopwatch</title>
+</head>
+<body>
+  <div class="header">
+    <h4>Stopwatch</h4>
+  </div>
+  <div class="timer-wrapper">
+    <div class="tick-marks" id="tickMarks"></div>
+    <div class="second-indicator" id="secondIndicator"></div>
+    <div class="timer" id="display">00:00:00:00</div>
+  </div>
+  <div class="controls">
+    <button class="start" onclick="startStop()" id="startStopBtn">Start</button>
+    <button class="pause" onclick="pauseTimer()" id="pauseBtn">Pause</button>
+    <button class="reset" onclick="resetTimer()">Reset</button>
+  </div>
+
+  <div class="laps-container" id="lapsContainer"></div>
+  </div>
+  
+  <div class="laps" id="laps"></div>
+  <div class="bottom-icons">
+        <a href="/alarm/alarm.html" class="icon-button">
+          <div class="icon">⏰</div>
+        </a>
+        <a href="/stopwatch/stopwatch.html" class="icon-button">
+          <div class="icon">⏱️</div>
+        </a>
+        <div class="icon-button" id="theme-toggle">
+          <div class="icon">🌓</div>
+        </div>
+        <a href="/index.html" class="icon-button">
+          <div class="icon">🌐</div>
+        </a>
+      </div>
+
+  <script>
+  let startTime = null;
+  let elapsedTime = 0;
+  let timer = null;
+  let lapCount = 0;
+  const display = document.getElementById("display");
+  const secondIndicator = document.getElementById("secondIndicator");
+  const startStopBtn = document.getElementById("startStopBtn");
+  const pauseBtn = document.getElementById("pauseBtn");
+  const themeToggle = document.getElementById("theme-toggle");
+
+  function updateDisplay() {
+    const time = elapsedTime + (timer ? performance.now() - startTime : 0);
+    const totalMs = Math.floor(time);
+    const ms = Math.floor((totalMs % 1000) / 10);
+    const s = Math.floor(totalMs / 1000) % 60;
+    const m = Math.floor(totalMs / 60000) % 60;
+    const h = Math.floor(totalMs / 3600000);
+
+    display.innerHTML =
+      `${String(h).padStart(2, '0')}:` +
+      `${String(m).padStart(2, '0')}:` +
+      `${String(s).padStart(2, '0')}:` +
+      `${String(ms).padStart(2, '0')}`;
+
+    const angle = (s * 6) + (ms / 100 * 6);
+    secondIndicator.style.transform = `translate(-50%, -50%) rotate(${angle}deg) translateY(-135px)`;
+
+    if (timer) requestAnimationFrame(updateDisplay);
+  }
+
+  function startStop() {
+    if (!timer) {
+      startTime = performance.now();
+      timer = true;
+      requestAnimationFrame(updateDisplay);
+      startStopBtn.innerText = "Lap";
+    } else {
+      lapCount++;
+      const lapTime = display.innerText;
+      const lapEl = document.createElement("div");
+      lapEl.className = "lap-item";
+      lapEl.innerHTML = `Lap ${lapCount} <span>${lapTime}</span>`; 
+      document.getElementById("laps").prepend(lapEl);
+    }
+  }
+
+  function pauseTimer() {
+    if (timer) {
+      elapsedTime += performance.now() - startTime;
+      timer = null;
+      startStopBtn.innerText = "Start";
+    }
+  }
+
+  function resetTimer() {
+    timer = null;
+    startTime = null;
+    elapsedTime = 0;
+    lapCount = 0;
+    display.innerHTML = "00:00:00:00";
+    document.getElementById("laps").innerHTML = "";
+    startStopBtn.innerText = "Start";
+    secondIndicator.style.transform = `translate(-50%, -50%) rotate(0deg) translateY(-135px)`; 
+  }
+
+  const tickContainer = document.getElementById("tickMarks");
+  for (let i = 0; i < 60; i++) {
+    const tick = document.createElement("div");
+    if (i % 5 === 0) {
+      tick.style.height = '12px'; 
+      tick.style.width = '3px';
+      tick.style.top = '10px'; 
+    }
+    tick.style.transform = `rotate(${i * 6}deg)`;
+    tickContainer.appendChild(tick);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark');
+    }
+    
+    const themeToggle = document.getElementById("theme-toggle");
+    if (themeToggle) { 
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            
+            if (document.body.classList.contains('dark')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    }
+    
+    const secondIndicator = document.getElementById('second-indicator') || 
+                           document.querySelector('.second-indicator') ||
+                           document.querySelector('#second-indicator');
+    if (secondIndicator) {
+        secondIndicator.style.transform = `translate(-50%, -50%) rotate(0deg) translateY(-135px)`;
+    }
+});
+  </script>
+</body>
+</html>
